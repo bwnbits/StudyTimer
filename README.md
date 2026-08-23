@@ -82,3 +82,12 @@ The resulting `StudyTimer.dmg` is unsigned unless you configure signing in Xcode
 ## License
 
 StudyTimer is released under the [MIT License](LICENSE).
+
+---
+
+## ⚠️ First-Time Opening Instructions (macOS Gatekeeper)
+
+Since StudyTimer is an open-source build distributed outside the Mac App Store without a paid Apple Developer ID:
+1. Drag **StudyTimer** to your `/Applications` folder.
+2. **Right-click** (or Control-click) `StudyTimer.app` and choose **Open**.
+3. Click **Open** when prompted by macOS to allow it to run.

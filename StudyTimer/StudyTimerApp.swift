@@ -1,17 +1,23 @@
-//
-//  StudyTimerApp.swift
-//  StudyTimer
-//
-//  Created by A.R. on 23/08/26.
-//
-
 import SwiftUI
 
 @main
 struct StudyTimerApp: App {
+    @StateObject private var store = TimerStore()
+
     var body: some Scene {
-        WindowGroup {
+        WindowGroup("Study Timer") {
             ContentView()
+                .environmentObject(store)
         }
+        .windowResizability(.contentSize)
+
+        MenuBarExtra {
+            MenuBarView()
+                .environmentObject(store)
+        } label: {
+            MenuBarLabel()
+                .environmentObject(store)
+        }
+        .menuBarExtraStyle(.menu)
     }
 }

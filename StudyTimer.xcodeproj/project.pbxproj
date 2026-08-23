@@ -6,13 +6,6 @@
 	objectVersion = 77;
 	objects = {
 
-/* Begin PBXFileReference section */
-		55CAEAE7303B1D1200394570 /* StudyTimer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = StudyTimer.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		55CAEB0103B1D1200394570 /* StudyTimerWidget.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = StudyTimerWidget.appex; sourceTree = BUILT_PRODUCTS_DIR; };
-		55CAEB0603B1D1200394570 /* StudyTimerWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudyTimerWidget.swift; sourceTree = "<group>"; };
-		55CAEB1303B1D1200394570 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-/* End PBXFileReference section */
-
 /* Begin PBXBuildFile section */
 		55CAEB0203B1D1200394570 /* StudyTimerWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55CAEB0603B1D1200394570 /* StudyTimerWidget.swift */; };
 		55CAEB0403B1D1200394570 /* StudyTimerWidget.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 55CAEB0103B1D1200394570 /* StudyTimerWidget.appex */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -42,6 +35,13 @@
 		};
 /* End PBXCopyFilesBuildPhase section */
 
+/* Begin PBXFileReference section */
+		55CAEAE7303B1D1200394570 /* StudyTimer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = StudyTimer.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		55CAEB0103B1D1200394570 /* StudyTimerWidget.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = StudyTimerWidget.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		55CAEB0603B1D1200394570 /* StudyTimerWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudyTimerWidget.swift; sourceTree = "<group>"; };
+		55CAEB1303B1D1200394570 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		55CAEAE9303B1D1200394570 /* StudyTimer */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
@@ -52,6 +52,13 @@
 
 /* Begin PBXFrameworksBuildPhase section */
 		55CAEAE4303B1D1200394570 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		55CAEB0E03B1D1200394570 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -175,15 +182,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-/* End PBXResourcesBuildPhase section */
-
-/* Begin PBXTargetDependency section */
-		55CAEB0C03B1D1200394570 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 55CAEB0B03B1D1200394570 /* StudyTimerWidget */;
-			targetProxy = 55CAEB0A03B1D1200394570 /* PBXContainerItemProxy */;
+		55CAEB0F03B1D1200394570 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
 		};
-/* End PBXTargetDependency section */
+/* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		55CAEAE3303B1D1200394570 /* Sources */ = {
@@ -201,21 +207,15 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		55CAEB0E03B1D1200394570 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		55CAEB0F03B1D1200394570 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		55CAEB0C03B1D1200394570 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 55CAEB0B03B1D1200394570 /* StudyTimerWidget */;
+			targetProxy = 55CAEB0A03B1D1200394570 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		55CAEAF0303B1D1400394570 /* Debug */ = {
@@ -224,7 +224,7 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
-				CODE_SIGN_STYLE = Manual;
+				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = "";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -242,7 +242,7 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
-				CODE_SIGN_STYLE = Manual;
+				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = "";
 				GENERATE_INFOPLIST_FILE = YES;
 				MACOSX_DEPLOYMENT_TARGET = 14.6;
@@ -258,14 +258,15 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Manual;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = "";
 				ENABLE_APP_SANDBOX = YES;
 				ENABLE_HARDENED_RUNTIME = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.productivity";
 				MACOSX_DEPLOYMENT_TARGET = 14.6;
-				CURRENT_PROJECT_VERSION = 1;
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 1.5;
 				PRODUCT_BUNDLE_IDENTIFIER = com.bwnbits.studytimer;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
@@ -276,14 +277,15 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Manual;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = "";
 				ENABLE_APP_SANDBOX = YES;
 				ENABLE_HARDENED_RUNTIME = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.productivity";
 				MACOSX_DEPLOYMENT_TARGET = 14.6;
-				CURRENT_PROJECT_VERSION = 1;
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 1.5;
 				PRODUCT_BUNDLE_IDENTIFIER = com.bwnbits.studytimer;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;

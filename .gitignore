@@ -3,3 +3,6 @@ dist/
 *.xcuserdata
 .DS_Store
 DerivedData/
+.build/
+dmg-staging/
+*.dmg

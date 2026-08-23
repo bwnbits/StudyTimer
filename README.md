@@ -29,6 +29,13 @@ StudyTimer keeps one clear number in view while the rest of your workflow stays 
 
 After launching StudyTimer once, Control-click the desktop, choose **Edit Widgets**, search for **Study Timer**, and add the large widget. The widget reads the current session through the shared App Group. Signing the widget from Xcode may require an Apple Developer account.
 
+### Install with Homebrew
+
+```bash
+brew tap bwnbits/studytimer
+brew install --cask studytimer
+```
+
 ## Build from source
 
 ### Prerequisites
@@ -78,19 +85,6 @@ The resulting `StudyTimer.dmg` is unsigned unless you configure signing in Xcode
 - [NetPulse](https://github.com/bwnbits/NetPulse) - a lightweight native macOS menu-bar network monitor.
 - [Homebrew tap](https://github.com/bwnbits/homebrew-netpulse) - install NetPulse with `brew install --cask bwnbits/netpulse/netpulse`.
 - [More from bwnbits](https://github.com/bwnbits) - other tools and projects.
-
-## License
-
-StudyTimer is released under the [MIT License](LICENSE).
-
----
-
-## ⚠️ First-Time Opening Instructions (macOS Gatekeeper)
-
-Since StudyTimer is an open-source build distributed outside the Mac App Store without a paid Apple Developer ID:
-1. Drag **StudyTimer** to your `/Applications` folder.
-2. **Right-click** (or Control-click) `StudyTimer.app` and choose **Open**.
-3. Click **Open** when prompted by macOS to allow it to run.
 
 ---
 

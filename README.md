@@ -52,4 +52,4 @@ hdiutil create -volname StudyTimer -srcfolder dist -ov -format UDZO StudyTimer.d
 
 ## License
 
-Personal project. Add a license here before redistributing.
+StudyTimer is released under the [MIT License](LICENSE).

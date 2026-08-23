@@ -6,6 +6,7 @@ struct ContentView: View {
     @State private var reminderText = ""
     @State private var reminderDate = Date().addingTimeInterval(3600)
     @State private var customMinutes = "30"
+    @State private var showingNotificationPrompt = false
 
     private let presets: [(String, TimeInterval)] = [("15m", 15 * 60), ("25m", 25 * 60), ("50m", 50 * 60)]
 
@@ -18,6 +19,20 @@ struct ContentView: View {
         }
         .frame(minWidth: 620, minHeight: 620)
         .padding(28)
+        .background {
+            LinearGradient(colors: [Color.indigo.opacity(0.12), Color.clear], startPoint: .topLeading, endPoint: .center)
+                .ignoresSafeArea()
+        }
+        .alert("Keep your focus block audible?", isPresented: $showingNotificationPrompt) {
+            Button("Allow Sounds & Alerts") { store.requestNotifications() }
+            Button("Later", role: .cancel) {}
+        } message: {
+            Text("StudyTimer can play a sound when a session ends and notify you when a reminder is due.")
+        }
+        .task {
+            guard await store.notificationPermissionStatus() == .notDetermined else { return }
+            showingNotificationPrompt = true
+        }
     }
 
     private var header: some View {
@@ -82,6 +97,12 @@ struct ContentView: View {
                 Button("Reset") { store.reset() }
                     .buttonStyle(.bordered)
             }
+        }
+        .padding(24)
+        .background(.regularMaterial, in: RoundedRectangle(cornerRadius: 18, style: .continuous))
+        .overlay {
+            RoundedRectangle(cornerRadius: 18, style: .continuous)
+                .stroke(store.isRunning ? Color.green.opacity(0.35) : Color.indigo.opacity(0.18), lineWidth: 1)
         }
         .padding(.bottom, 28)
     }

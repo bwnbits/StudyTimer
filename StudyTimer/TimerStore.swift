@@ -58,7 +58,6 @@ final class TimerStore: ObservableObject {
             .sink { [weak self] _ in
                 self?.refresh()
             }
-        requestNotificationAccess()
     }
 
     var isRunning: Bool { targetDate != nil }
@@ -161,6 +160,18 @@ final class TimerStore: ObservableObject {
                 self?.checkMissedReminders()
             }
         }
+    }
+
+    func notificationPermissionStatus() async -> UNAuthorizationStatus {
+        await withCheckedContinuation { continuation in
+            UNUserNotificationCenter.current().getNotificationSettings { settings in
+                continuation.resume(returning: settings.authorizationStatus)
+            }
+        }
+    }
+
+    func requestNotifications() {
+        requestNotificationAccess()
     }
 
     private func scheduleAllReminders() {

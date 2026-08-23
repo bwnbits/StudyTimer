@@ -2,6 +2,7 @@ import Foundation
 import Combine
 import WidgetKit
 import AppKit
+import AVFoundation
 import UserNotifications
 
 struct StudyTask: Identifiable, Codable, Equatable {
@@ -38,6 +39,23 @@ private struct SavedState: Codable {
 
 @MainActor
 final class TimerStore: ObservableObject {
+    struct AlertSound: Identifiable, Hashable {
+        let id: String
+        let name: String
+        let resourceName: String?
+    }
+
+    static let customAlertSounds = [
+        AlertSound(id: "gentle-chime", name: "Gentle chime", resourceName: "gentle-chime"),
+        AlertSound(id: "zen-bowl", name: "Zen bowl", resourceName: "zen-bowl"),
+        AlertSound(id: "soft-melody", name: "Soft melody", resourceName: "soft-melody"),
+        AlertSound(id: "classic-bell", name: "Classic bell", resourceName: "classic-bell")
+    ]
+    static let systemAlertSounds = ["Glass", "Ping", "Pop", "Tink"].map {
+        AlertSound(id: $0, name: $0, resourceName: nil)
+    }
+    static let alertSounds = customAlertSounds + systemAlertSounds
+
     @Published var duration: TimeInterval = 25 * 60
     @Published private(set) var elapsed: TimeInterval = 0
     @Published private(set) var startDate: Date?
@@ -45,11 +63,16 @@ final class TimerStore: ObservableObject {
     @Published private(set) var laps: [TimeInterval] = []
     @Published var tasks: [StudyTask] = []
     @Published var reminders: [Reminder] = []
+    @Published private(set) var alertSoundName = "gentle-chime"
+    @Published private(set) var soundAlertsEnabled = true
 
     private var timer: AnyCancellable?
     private let defaults = UserDefaults(suiteName: "group.com.bwnbits.studytimer") ?? .standard
     private let stateKey = "studyTimer.state"
     private let notifiedReminderKey = "studyTimer.notifiedReminders"
+    private let alertSoundKey = "studyTimer.alertSound"
+    private let soundAlertsEnabledKey = "studyTimer.soundAlertsEnabled"
+    private var audioPlayer: AVAudioPlayer?
 
     init() {
         load()
@@ -133,6 +156,21 @@ final class TimerStore: ObservableObject {
         save()
     }
 
+    func setAlertSound(named name: String) {
+        guard Self.alertSounds.contains(where: { $0.id == name }) else { return }
+        alertSoundName = name
+        defaults.set(name, forKey: alertSoundKey)
+    }
+
+    func setSoundAlertsEnabled(_ enabled: Bool) {
+        soundAlertsEnabled = enabled
+        defaults.set(enabled, forKey: soundAlertsEnabledKey)
+    }
+
+    func previewAlertSound() {
+        playAlertSound()
+    }
+
     func currentElapsed(at date: Date = Date()) -> TimeInterval {
         guard let startDate else { return elapsed }
         return min(duration, elapsed + max(date.timeIntervalSince(startDate), 0))
@@ -146,7 +184,7 @@ final class TimerStore: ObservableObject {
             startDate = nil
             self.targetDate = nil
             save()
-            NSSound.beep()
+            playAlertSound()
             sendNotification(title: "Study session complete", body: "Your \(duration.clockText) session is finished.")
         } else {
             objectWillChange.send()
@@ -208,8 +246,23 @@ final class TimerStore: ObservableObject {
         guard !notified.contains(reminder.id.uuidString) else { return }
         notified.insert(reminder.id.uuidString)
         defaults.set(Array(notified), forKey: notifiedReminderKey)
-        NSSound.beep()
+        playAlertSound()
         sendNotification(title: "Missed reminder", body: reminder.title)
+    }
+
+    private func playAlertSound() {
+        guard soundAlertsEnabled,
+              let alertSound = Self.alertSounds.first(where: { $0.id == alertSoundName }) else { return }
+
+        audioPlayer?.stop()
+        if let resourceName = alertSound.resourceName,
+           let url = Bundle.main.url(forResource: resourceName, withExtension: "wav") {
+            audioPlayer = try? AVAudioPlayer(contentsOf: url)
+            audioPlayer?.prepareToPlay()
+            audioPlayer?.play()
+        } else if let sound = NSSound(named: NSSound.Name(alertSound.id)) {
+            sound.play()
+        }
     }
 
     private func sendNotification(title: String, body: String) {
@@ -230,6 +283,13 @@ final class TimerStore: ObservableObject {
     }
 
     private func load() {
+        let savedSoundName = defaults.string(forKey: alertSoundKey) ?? alertSoundName
+        if Self.alertSounds.contains(where: { $0.id == savedSoundName }) {
+            alertSoundName = savedSoundName
+        }
+        if defaults.object(forKey: soundAlertsEnabledKey) != nil {
+            soundAlertsEnabled = defaults.bool(forKey: soundAlertsEnabledKey)
+        }
         guard let data = defaults.data(forKey: stateKey),
               let state = try? JSONDecoder().decode(SavedState.self, from: data) else { return }
         duration = state.duration

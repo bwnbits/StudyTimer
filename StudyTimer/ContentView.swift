@@ -7,6 +7,7 @@ struct ContentView: View {
     @State private var reminderDate = Date().addingTimeInterval(3600)
     @State private var customMinutes = "30"
     @State private var showingNotificationPrompt = false
+    @State private var showingSettings = false
 
     private let presets: [(String, TimeInterval)] = [("15m", 15 * 60), ("25m", 25 * 60), ("50m", 50 * 60)]
 
@@ -16,6 +17,7 @@ struct ContentView: View {
             timerPanel
             Divider()
             lowerPanel
+            settingsControl
         }
         .frame(minWidth: 620, minHeight: 620)
         .padding(28)
@@ -113,6 +115,64 @@ struct ContentView: View {
             reminderList
         }
         .padding(.top, 24)
+    }
+
+    private var settingsControl: some View {
+        HStack {
+            Spacer()
+            Button {
+                showingSettings = true
+            } label: {
+                Image(systemName: "gearshape")
+            }
+            .buttonStyle(.borderless)
+            .help("Settings")
+            .popover(isPresented: $showingSettings) {
+                settingsPopover
+            }
+        }
+        .padding(.top, 18)
+    }
+
+    private var settingsPopover: some View {
+        VStack(alignment: .leading, spacing: 16) {
+            Text("SETTINGS")
+                .font(.caption.weight(.bold))
+                .foregroundStyle(.secondary)
+
+            Toggle("Sound alerts", isOn: Binding(
+                get: { store.soundAlertsEnabled },
+                set: { store.setSoundAlertsEnabled($0) }
+            ))
+
+            Picker("Alert sound", selection: Binding(
+                get: { store.alertSoundName },
+                set: {
+                    store.setAlertSound(named: $0)
+                    store.previewAlertSound()
+                }
+            )) {
+                Section("Focus tones") {
+                    ForEach(TimerStore.customAlertSounds) { sound in
+                        Text(sound.name).tag(sound.id)
+                    }
+                }
+                Section("System sounds") {
+                    ForEach(TimerStore.systemAlertSounds) { sound in
+                        Text(sound.name).tag(sound.id)
+                    }
+                }
+            }
+
+            Button {
+                store.previewAlertSound()
+            } label: {
+                Label("Play preview", systemImage: "play.circle")
+            }
+            .disabled(!store.soundAlertsEnabled)
+        }
+        .padding(18)
+        .frame(width: 240)
     }
 
     private var taskList: some View {
